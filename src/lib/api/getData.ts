@@ -23,23 +23,23 @@ export interface Realm {
 }
 
 export interface Character {
-  id: string;
-  name: string;
-  realm_url_api: string;
-  height: string;
-  hair_color: string;
-  eye_color: string;
-  date_of_birth: string;
-  date_of_death: string;
-  gender: string;
-  species_api_url: string;
-  race_api_url: string;
-  group_api_url: string;
-  weapons: string[];
-  languages_url_api: string[];
-  films_url_api: string[];
-  books_url_api: string[];
-  url_api: string;
+    id: string
+    name: string
+    realm: string
+    height: string
+    hair_color: string
+    eye_color: string
+    date_of_birth: string
+    date_of_death: string
+    gender: string
+    species: string
+    race: string
+    group: string
+    weapons: string[];
+    languages: string[];
+    films: string[];
+    books: string[]
+    url: string
 }
 
 
@@ -86,11 +86,48 @@ export const getCharacters = async (): Promise<Character[] | null> => {
     }
 
     const data = await response.json();
-    const data_race = await fetch(data.results.race);
     const characters = data.results;
     return characters;
   } catch (error) {
     console.error('Error fetching characters:', error);
+    return null;
+  }
+};
+
+export const getCharacter = async (id: string): Promise<Character | null> => {
+  try {
+    const response = await fetch(`https://lotrapi.co/api/v1/characters/${id}`);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // API'den dönen veri üzerinde doğru alanları kontrol ederek karakter objesini oluşturun
+    const character: Character = {
+      id: data.id,
+      name: data.name,
+      realm: data.realm,
+      height: data.height,
+      hair_color: data.hair_color,
+      eye_color: data.eye_color,
+      date_of_birth: data.date_of_birth,
+      date_of_death: data.date_of_death,
+      gender: data.gender,
+      species: data.species,
+      race: data.race,
+      group: data.group,
+      weapons: data.weapons,
+      languages: data.languages,
+      films: data.films,
+      books: data.books,
+      url: data.url
+    };
+
+    return character;
+  } catch (error) {
+    console.error('Error fetching character:', error);
     return null;
   }
 };
