@@ -21,7 +21,7 @@ const NavbarDrawer = ({ sidebarOpen, toggleSidebar, menuItems }: Props) => {
     <Sheet open={sidebarOpen} onOpenChange={toggleSidebar}>
       <SheetContent
         side="left"
-        className="w-[300px] sm:w-[400px] bg-gradient-to-r from-yellow-600 to-yellow-500 text-white p-6 border-none"
+        className="w-[300px] sm:w-[400px] bg-gradient-to-r from-yellow-800 to-yellow-600 text-white p-6 border-none"
       >
         <SheetHeader className="flex flex-col items-start mb-8">
           <div className="flex items-center justify-between w-full">

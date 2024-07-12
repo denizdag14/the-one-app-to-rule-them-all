@@ -2,11 +2,10 @@
   @tailwind components;
   @tailwind utilities;
 
-  html,
+  /* html,
   body {
     height: 100%;
-    overflow: hidden;
-  }
+  } */
 
   @keyframes shimmer {
   0% {

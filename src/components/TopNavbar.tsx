@@ -12,7 +12,7 @@ import TopNavbarSkeleton from "./TopNavbarSkeleton";
 
 const TopNavbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const menuItems = ["Characters", "Places", "Books"];
+  const menuItems = ["Characters", "Realms", "Movies"];
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -27,7 +27,7 @@ const TopNavbar = () => {
   return (
     <div className="bg-gradient-to-r from-yellow-800 to-yellow-600 p-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex flex-1 justify-start items-center">
           <Button
             variant="ghost"
             size="icon"
@@ -40,7 +40,7 @@ const TopNavbar = () => {
             <GiRing className="mr-3 text-yellow-300 text-4xl group-hover:animate-spin transition-all duration-500" />
             <div className="flex flex-col">
               <h1 className="font-bold font-serif text-3xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 animate-shimmer">
-                The One App
+                The One Website
               </h1>
               <span className="font-sans text-yellow-200 text-sm italic mt-1">
                 to rule them all
@@ -51,7 +51,7 @@ const TopNavbar = () => {
 
         <NavbarItem />
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 flex-1 justify-end">
           <div className="hidden sm:flex relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-yellow-200 pointer-events-none" />
             <Input
