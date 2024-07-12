@@ -8,6 +8,20 @@
     overflow: hidden;
   }
 
+  @keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+  background-size: 200% auto;
+}
+
   @layer base {
     :root {
       --background: 0 0% 100%;

@@ -1,135 +1,86 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { ModeToggle } from './ModeToggle';
-import { alpha, InputBase, styled, Button, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+import React, { useState, useEffect } from "react";
+import { GiRing } from "react-icons/gi";
+import { Menu, Search, Sun, Moon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import NavbarItem from "./NavbarItem";
+import NavbarDrawer from "./NavbarDrawer";
+import { useTheme } from "next-themes";
+import TopNavbarSkeleton from "./TopNavbarSkeleton";
 
 const TopNavbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const menuItems = ["Characters", "Places", "Books"];
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, [mounted]);
 
-  const menuItems = ['Characters', 'Places', 'Books'];
+  if (!mounted) {
+    return <TopNavbarSkeleton />;
+  }
 
   return (
-    <>
-      <AppBar position="static" className='bg-gradient-to-r from-yellow-600 to-yellow-500'>
-        <Toolbar className='flex justify-between items-center'>
-          <div className='flex items-center'>
-            <IconButton
-              color="inherit"
-              aria-label="menu"
-              edge="start"
-              onClick={toggleSidebar}
-              className='block md:hidden mr-2'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography className='font-bold font-sans text-white mr-2' variant="h6" component="div">
-              The One App
-            </Typography>
-            <Typography className='hidden sm:inline font-sans text-yellow-200 text-sm'>
-              to rule them all
-            </Typography>
+    <div className="bg-gradient-to-r from-yellow-800 to-yellow-600 p-4 shadow-lg">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSidebarOpen(true)}
+            className="md:hidden mr-2 text-white hover:bg-yellow-500/20 transition-all duration-300 ease-in-out transform hover:scale-110"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          <div className="flex items-center group">
+            <GiRing className="mr-3 text-yellow-300 text-4xl group-hover:animate-spin transition-all duration-500" />
+            <div className="flex flex-col">
+              <h1 className="font-bold font-serif text-3xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 animate-shimmer">
+                The One App
+              </h1>
+              <span className="font-sans text-yellow-200 text-sm italic mt-1">
+                to rule them all
+              </span>
+            </div>
           </div>
-          
-          <div className='hidden md:flex space-x-4'>
-            {menuItems.map((item) => (
-              <Button key={item} color="inherit">{item}</Button>
-            ))}
-          </div>
-          
-          <div className='flex items-center space-x-2'>
-            <Search className='hidden sm:flex'>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
-            <ModeToggle />
-          </div>
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        anchor="left"
-        open={sidebarOpen}
-        onClose={toggleSidebar}
-      >
-        <div className='p-4 text-white h-full bg-gradient-to-r from-yellow-600 to-yellow-500'>
-          <div className='flex justify-between items-center mb-4'>
-          <Typography className='font-bold font-sans text-white mr-2' variant="h6" component="div">
-              The One App
-            </Typography>
-            <Typography className='hidden sm:inline font-sans text-yellow-200 text-sm'>
-              to rule them all
-            </Typography>
-            <IconButton className='text-white ml-2' onClick={toggleSidebar} edge="end" aria-label="close">
-              <CloseIcon />
-            </IconButton>
-          </div>
-          <List>
-            {menuItems.map((item) => (
-              <ListItem className='rounded-lg' button key={item} onClick={toggleSidebar}>
-                <ListItemText primary={item} />
-              </ListItem>
-            ))}
-          </List>
         </div>
-      </Drawer>
-    </>
+
+        <NavbarItem />
+
+        <div className="flex items-center space-x-4">
+          <div className="hidden sm:flex relative">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-yellow-200 pointer-events-none" />
+            <Input
+              placeholder="Search…"
+              className="pl-8 bg-yellow-500/30 hover:bg-yellow-500/40 focus:bg-yellow-500/50 transition-all duration-300
+               border-none outline-none ring-0 focus:ring-2 ring-yellow-300 focus:ring-yellow-300 focus-visible:ring-yellow-300
+               placeholder:text-yellow-200/70 text-white w-40 focus:w-60"
+            />
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="text-white hover:bg-yellow-500/20 transition-all duration-300 ease-in-out transform hover:rotate-12"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </Button>
+        </div>
+      </div>
+      <NavbarDrawer
+        menuItems={menuItems}
+        sidebarOpen={sidebarOpen}
+        toggleSidebar={() => setSidebarOpen(false)}
+      />
+    </div>
   );
 };
 
