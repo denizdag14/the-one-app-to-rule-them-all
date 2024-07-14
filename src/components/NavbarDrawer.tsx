@@ -6,7 +6,7 @@ import {
   GiFilmStrip,
   GiInfo,
   GiRing,
-  GiSwordClash,
+  GiWarlockEye,
 } from "react-icons/gi";
 import { X } from "lucide-react";
 import {
@@ -69,7 +69,7 @@ const NavbarDrawer = ({ sidebarOpen, toggleSidebar, menuItems }: Props) => {
               }}
             >
               {item === "Characters" ? (
-                <GiSwordClash className="mr-2" />
+                <GiWarlockEye className="mr-2" />
               ) : item === "Movies" ? (
                 <GiFilmStrip className="mr-2" />
               ) : item === "About" ? (
