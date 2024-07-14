@@ -1,7 +1,8 @@
-export default function Home() {
-  return (
-    <div className="w-full h-full flex items-center justify-center">
-      this is the home page
-    </div>
-  );
-}
+import React from "react";
+import HomePage from "@/components/HomePage";
+
+const Home = () => {
+  return <HomePage />;
+};
+
+export default Home;

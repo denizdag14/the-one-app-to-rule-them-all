@@ -4,171 +4,188 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getCharacter, Character } from "@/lib/api/getData";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  HiOutlineUser,
-  HiOutlineCake,
-  HiOutlineEye,
-  HiOutlineStar,
-} from "react-icons/hi";
-import { GiSwordClash, GiDeathSkull, GiBodyHeight } from "react-icons/gi";
-import { IoMdColorFill } from "react-icons/io";
+  FaUserAlt,
+  FaBirthdayCake,
+  FaSkull,
+  FaRulerVertical,
+} from "react-icons/fa";
+import { GiCrossedSwords, GiEyeTarget, GiRing } from "react-icons/gi";
+import { MdColorLens } from "react-icons/md";
 
-const Body = () => {
+const CharacterProfile = () => {
   const pathname = usePathname();
   const id = pathname.split("/")[2];
   const [character, setCharacter] = useState<Character | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCharacter = async () => {
       try {
         if (typeof id === "string") {
           const fetchedCharacter = await getCharacter(id);
-          if (fetchedCharacter) {
-            setCharacter(fetchedCharacter);
-          } else {
-            setError("Character not found.");
-          }
+          setCharacter(fetchedCharacter);
         }
       } catch (error) {
-        setError("Failed to fetch character.");
+        console.error("Failed to fetch character:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchCharacter();
   }, [id]);
 
-  if (error) {
-    return (
+  if (isLoading) return <LoadingScreen />;
+  if (!character) return <ErrorScreen />;
+
+  return (
+    <AnimatePresence>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center justify-center h-screen"
+        exit={{ opacity: 0 }}
+        className="min-h-screen bg-gradient-to-br w-full bg-gray-100 dark:bg-gray-900 text-white p-4 sm:p-8"
       >
-        <div className="text-3xl font-bold text-red-500 animate-bounce">
-          {error}
+        <div className="max-w-7xl mx-auto">
+          <Header name={character.name} />
+          <main className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <CharacterImage name={character.name} />
+            <CharacterInfo character={character} />
+          </main>
         </div>
       </motion.div>
-    );
-  }
-
-  if (!character) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-3xl font-bold animate-pulse">Loading...</div>
-      </div>
-    );
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="container mx-auto px-4 py-8"
-    >
-      <div className="max-w-6xl mx-auto bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-2xl rounded-2xl overflow-hidden">
-        <div className="p-8">
-          <motion.h1
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 animate-shimmer"
-          >
-            {character.name}
-          </motion.h1>
-          <div className="border-b-2 border-yellow-400 dark:border-yellow-600 w-full mb-6"></div>
-          <div className="flex flex-col lg:flex-row items-start justify-between">
-            <motion.div
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="w-full lg:w-1/2 mb-6 lg:mb-0 flex justify-center lg:justify-start"
-            >
-              <Image
-                src={`/${character.name.split(" ")[0]}.webp`}
-                alt={"character_photo"}
-                height={500}
-                width={500}
-                className="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              />
-            </motion.div>
-            <div className="w-full lg:w-1/2 lg:pl-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CharacterInfo
-                  label="Weapons"
-                  value={character.weapons.join(", ")}
-                />
-                <CharacterInfo label="Height" value={character.height} />
-                <CharacterInfo
-                  label="Hair Color"
-                  value={character.hair_color}
-                />
-                <CharacterInfo label="Eye Color" value={character.eye_color} />
-                <CharacterInfo
-                  label="Date of Birth"
-                  value={character.date_of_birth}
-                />
-                <CharacterInfo
-                  label="Date of Death"
-                  value={character.date_of_death}
-                />
-                <CharacterInfo label="Gender" value={character.gender} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+    </AnimatePresence>
   );
 };
 
-type IconMapKey =
-  | "Weapons"
-  | "Height"
-  | "Hair Color"
-  | "Eye Color"
-  | "Date of Birth"
-  | "Date of Death"
-  | "Gender";
+const LoadingScreen = () => (
+  <div className="flex items-center justify-center h-screen w-full">
+    <GiRing className="w-16 h-16 text-yellow-500 border-solid rounded-full animate-spin border-t-transparent" />
+  </div>
+);
 
-const iconMap: Record<
-  IconMapKey,
-  React.ComponentType<{ className?: string }>
-> = {
-  Weapons: GiSwordClash,
-  Height: GiBodyHeight,
-  "Hair Color": IoMdColorFill,
-  "Eye Color": HiOutlineEye,
-  "Date of Birth": HiOutlineCake,
-  "Date of Death": GiDeathSkull,
-  Gender: HiOutlineUser,
-};
+const ErrorScreen = () => (
+  <div className="flex items-center justify-center h-screen bg-gray-900 text-white">
+    <h1 className="text-3xl font-bold">Character not found</h1>
+  </div>
+);
 
-const CharacterInfo = ({
+const Header = ({ name }: { name: string }) => (
+  <motion.header
+    initial={{ y: -50, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.5 }}
+    className="text-center"
+  >
+    <h1 className="text-5xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 animate-shimmer p-2">
+      {name}
+    </h1>
+  </motion.header>
+);
+
+const CharacterImage = ({ name }: { name: string }) => (
+  <motion.div
+    initial={{ scale: 0.9, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ duration: 0.5 }}
+    className="relative w-96 h-96 lg:h-auto lg:col-span-1"
+  >
+    <Image
+      src={`/${name.split(" ")[0]}.webp`}
+      alt={name}
+      layout="fill"
+      objectFit="cover"
+      className="rounded-lg shadow-2xl"
+    />
+  </motion.div>
+);
+
+const CharacterInfo = ({ character }: { character: Character }) => (
+  <div className="lg:col-span-2 space-y-6">
+    <InfoSection
+      title="Personal Details"
+      items={[
+        { icon: FaUserAlt, label: "Gender", value: character.gender },
+        {
+          icon: FaBirthdayCake,
+          label: "Date of Birth",
+          value: character.date_of_birth,
+        },
+        {
+          icon: FaSkull,
+          label: "Date of Death",
+          value: character.date_of_death,
+        },
+        { icon: FaRulerVertical, label: "Height", value: character.height },
+      ]}
+    />
+    <InfoSection
+      title="Appearance"
+      items={[
+        { icon: MdColorLens, label: "Hair Color", value: character.hair_color },
+        { icon: GiEyeTarget, label: "Eye Color", value: character.eye_color },
+      ]}
+    />
+    <InfoSection
+      title="Combat"
+      items={[
+        {
+          icon: GiCrossedSwords,
+          label: "Weapons",
+          value: character.weapons.join(", "),
+        },
+      ]}
+    />
+  </div>
+);
+
+const InfoSection = ({
+  title,
+  items,
+}: {
+  title: string;
+  items: { icon: React.ElementType; label: string; value: string }[];
+}) => (
+  <motion.section
+    initial={{ y: 20, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.5 }}
+    className="dark:bg-gray-800 bg-gray-200 rounded-lg p-6 shadow-lg"
+  >
+    <h2 className="text-2xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-600 to-yellow-400">
+      {title}
+    </h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {items.map((item, index) => (
+        <InfoItem
+          key={index}
+          icon={item.icon}
+          label={item.label}
+          value={item.value}
+        />
+      ))}
+    </div>
+  </motion.section>
+);
+
+const InfoItem = ({
+  icon: Icon,
   label,
   value,
 }: {
-  label: IconMapKey;
+  icon: React.ElementType;
+  label: string;
   value: string;
-}) => {
-  const Icon = iconMap[label] || HiOutlineStar;
+}) => (
+  <div className="flex items-center space-x-3">
+    <Icon className="text-purple-500 text-xl" />
+    <div>
+      <p className="text-gray-400 text-sm">{label}</p>
+      <p className="text-black dark:text-white font-medium">{value}</p>
+    </div>
+  </div>
+);
 
-  return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md flex items-center"
-    >
-      <Icon className="text-yellow-500 mr-3 text-xl flex-shrink-0" />
-      <div>
-        <p className="text-gray-800 dark:text-gray-200">
-          <span className="font-semibold">{label}:</span> {value}
-        </p>
-      </div>
-    </motion.div>
-  );
-};
-
-export default Body;
+export default CharacterProfile;

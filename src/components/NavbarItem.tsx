@@ -3,7 +3,7 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-import { GiSwordClash, GiCastle, GiFilmStrip } from "react-icons/gi";
+import { GiSwordClash, GiCastle, GiFilmStrip, GiInfo } from "react-icons/gi";
 
 const NavbarItem = () => {
   const router = useRouter();
@@ -29,6 +29,13 @@ const NavbarItem = () => {
       >
         <GiFilmStrip className="mr-2" />
         Movies
+      </Button>
+      <Button
+        onClick={() => router.push(`/about`)}
+        className="hover:bg-inherit bg-inherit text-white hover:text-yellow-200 transition-colors duration-300 flex items-center"
+      >
+        <GiInfo className="mr-2" />
+        About
       </Button>
     </div>
   );

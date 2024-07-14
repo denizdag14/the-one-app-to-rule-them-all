@@ -1,5 +1,13 @@
+"use client";
+
 import React from "react";
-import { GiRing } from "react-icons/gi";
+import {
+  GiCastle,
+  GiFilmStrip,
+  GiInfo,
+  GiRing,
+  GiSwordClash,
+} from "react-icons/gi";
 import { X } from "lucide-react";
 import {
   Sheet,
@@ -9,6 +17,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 type Props = {
   sidebarOpen: boolean;
@@ -17,6 +26,7 @@ type Props = {
 };
 
 const NavbarDrawer = ({ sidebarOpen, toggleSidebar, menuItems }: Props) => {
+  const router = useRouter();
   return (
     <Sheet open={sidebarOpen} onOpenChange={toggleSidebar}>
       <SheetContent
@@ -53,8 +63,20 @@ const NavbarDrawer = ({ sidebarOpen, toggleSidebar, menuItems }: Props) => {
               key={item}
               variant="ghost"
               className="justify-start rounded-lg text-lg font-medium text-white hover:bg-yellow-500/30 hover:text-yellow-100 transition-all duration-300 ease-in-out transform hover:translate-x-2"
-              onClick={() => toggleSidebar(false)}
+              onClick={() => {
+                toggleSidebar(false);
+                router.push(`/${item.toLocaleLowerCase()}`);
+              }}
             >
+              {item === "Characters" ? (
+                <GiSwordClash className="mr-2" />
+              ) : item === "Movies" ? (
+                <GiFilmStrip className="mr-2" />
+              ) : item === "About" ? (
+                <GiInfo className="mr-2" />
+              ) : (
+                <GiCastle className="mr-2" />
+              )}
               {item}
             </Button>
           ))}

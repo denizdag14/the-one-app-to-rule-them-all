@@ -18,6 +18,7 @@ const TopNavbarSkeleton = (props: Props) => {
           <Skeleton className="h-6 w-32 mb-1 bg-yellow-500/30 "></Skeleton>
           <Skeleton className="h-6 w-32 mb-1 bg-yellow-500/30 "></Skeleton>
           <Skeleton className="h-6 w-32 mb-1 bg-yellow-500/30 "></Skeleton>
+          <Skeleton className="h-6 w-32 mb-1 bg-yellow-500/30 "></Skeleton>
         </div>
         <div className="flex items-center space-x-4">
           <Skeleton className="h-8 w-40 bg-yellow-500/30 rounded-md"></Skeleton>
