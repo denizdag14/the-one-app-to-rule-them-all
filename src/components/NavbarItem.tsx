@@ -8,7 +8,7 @@ import { GiWarlockEye, GiCastle, GiFilmStrip, GiInfo } from "react-icons/gi";
 const NavbarItem = () => {
   const router = useRouter();
   return (
-    <div className="hidden items-center bg-inherit border-none md:flex md:flex-1 md:justify-center space-x-4">
+    <div className="hidden items-center bg-inherit border-none lg:flex lg:flex-1 lg:justify-center space-x-4">
       <Button
         onClick={() => router.push(`/characters`)}
         className="hover:bg-inherit bg-inherit text-white hover:text-yellow-200 transition-colors duration-300 flex items-center"

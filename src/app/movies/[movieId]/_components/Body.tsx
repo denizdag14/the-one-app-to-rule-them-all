@@ -239,9 +239,9 @@ const MovieInfo = ({
 
 const MovieCharacters = ({ characters }: { characters: Character[] }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: 0.2 }}
+    initial={{ scale: 0.9, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ duration: 0.5 }}
     className="mt-12"
   >
     <h2 className="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white text-center">
@@ -253,9 +253,6 @@ const MovieCharacters = ({ characters }: { characters: Character[] }) => (
           key={character.id}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.1 }}
           className="bg-white bg-opacity-60 dark:bg-gray-800 dark:bg-opacity-60 p-4 rounded-lg text-center shadow-lg hover:shadow-2xl transition-all duration-300 backdrop-filter backdrop-blur-sm"
         >
           <Link href={`/character/${character.id}`}>

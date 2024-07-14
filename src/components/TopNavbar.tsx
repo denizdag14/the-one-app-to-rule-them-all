@@ -37,7 +37,7 @@ const TopNavbar = () => {
         >
           <Menu className="h-4 w-4" />
         </Button>
-        <div className="flex flex-1 justify-center mr-10 md:justify-between items-center">
+        <div className="flex flex-1 justify-center md:justify-between items-center">
           <div className="flex items-center">
             <div
               onClick={() => router.push("/")}
@@ -54,25 +54,27 @@ const TopNavbar = () => {
           </div>
           <NavbarItem />
           <div className="hidden md:flex md:justify-end relative">
-            <Search className="absolute left-2 top-3 h-4 w-4 text-yellow-200 pointer-events-none" />{" "}
-            <Input
-              placeholder="not functional..."
-              className="pl-8 bg-yellow-500/30 hover:bg-yellow-500/40 focus:bg-yellow-500/50 transition-all duration-300 border-none outline-none ring-0 focus:ring-2 ring-yellow-300 focus:ring-yellow-300 focus-visible:ring-yellow-300 placeholder:text-yellow-200/70 text-white w-40 focus:w-60"
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="text-white hover:bg-yellow-500/20 transition-all duration-300 ease-in-out transform hover:rotate-12 ml-2"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </Button>
+            <div className="">
+              <Search className="absolute left-2 top-3 h-4 w-4 text-yellow-200 pointer-events-none" />{" "}
+              <Input
+                placeholder="not functional..."
+                className="pl-8 bg-yellow-500/30 hover:bg-yellow-500/40 focus:bg-yellow-500/50 transition-all duration-300 border-none outline-none ring-0 focus:ring-2 ring-yellow-300 focus:ring-yellow-300 focus-visible:ring-yellow-300 placeholder:text-yellow-200/70 text-white w-40 focus:w-60"
+              />
+            </div>
           </div>
         </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="text-white hover:bg-yellow-500/20 transition-all duration-300 ease-in-out transform hover:rotate-12 ml-2"
+        >
+          {theme === "dark" ? (
+            <Sun className="h-4 w-4" />
+          ) : (
+            <Moon className="h-4 w-4" />
+          )}
+        </Button>
       </div>
       <NavbarDrawer
         menuItems={menuItems}

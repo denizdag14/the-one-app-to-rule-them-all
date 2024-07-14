@@ -18,7 +18,7 @@ const HomePage = (props: Props) => {
         className="brightness-50"
       />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-transparent bg-clip-text bg-gradient-to-r dark:from-yellow-200 dark:via-yellow-400 dark:to-yellow-200 from-yellow-400 via-yellow-600 to-yellow-400 animate-shimmer z-10">
         <motion.h1
           className="text-6xl md:text-8xl font-bold mb-8 text-center"
           initial={{ opacity: 0, y: -50 }}

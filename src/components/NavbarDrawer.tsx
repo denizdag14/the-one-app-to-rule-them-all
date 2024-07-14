@@ -39,7 +39,7 @@ const NavbarDrawer = ({ sidebarOpen, toggleSidebar, menuItems }: Props) => {
               <GiRing className="mr-3 text-yellow-300 text-4xl group-hover:animate-spin transition-all duration-500" />
               <div className="flex flex-col">
                 <SheetTitle className="font-bold font-serif text-3xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 animate-shimmer">
-                  The One App
+                  The One Website
                 </SheetTitle>
                 <span className="font-sans text-yellow-200 text-sm italic mt-1">
                   to rule them all

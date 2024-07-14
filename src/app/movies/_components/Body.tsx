@@ -103,7 +103,7 @@ const Body = () => {
   return (
     <div className="mx-auto p-20 pt-8 min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-200 dark:from-gray-900 dark:to-gray-800">
       <motion.h1
-        className="text-4xl mt-4 md:text-6xl font-extrabold text-center mb-8 text-yellow-800 dark:text-yellow-200"
+        className="text-4xl md:text-6xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r dark:from-yellow-200 dark:via-yellow-400 dark:to-yellow-200 from-yellow-400 via-yellow-600 to-yellow-400 animate-shimmer"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -124,8 +124,8 @@ const Body = () => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <Link href={`/movies/${movie.id}`}>
-              <Card className="p-6 w-full h-full rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                <div className="relative w-full pb-[150%] mb-4">
+              <Card className=" w-full h-full rounded-lg overflow-hidden bg-white dark:bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                <div className="relative w-full pb-[150%]">
                   <Image
                     src={`https://image.tmdb.org/t/p/original/${
                       posterPath && posterPath[index].poster_path
@@ -133,12 +133,14 @@ const Body = () => {
                     alt={`${movie.title} poster`}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-md"
+                    className="rounded-md rounded-bl-none rounded-br-none"
                   />
                 </div>
-                <h2 className="text-2xl font-extrabold text-center text-yellow-800 dark:text-yellow-200">
-                  {movie.title}
-                </h2>
+                <div className="w-full h-16 flex items-center justify-center mt-3 mb-3">
+                  <h2 className="text-2xl font-extrabold text-center text-yellow-800 dark:text-yellow-200">
+                    {movie.title}
+                  </h2>
+                </div>
               </Card>
             </Link>
           </motion.div>

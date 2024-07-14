@@ -36,7 +36,7 @@ const Body = () => {
   return (
     <div className="mx-auto p-20 pt-8 min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-200 dark:from-gray-900 dark:to-gray-800">
       <motion.h1
-        className="text-4xl mt-4 md:text-6xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r dark:from-yellow-200 dark:via-yellow-400 dark:to-yellow-200 from-yellow-400 via-yellow-600 to-yellow-400 animate-shimmer"
+        className="text-4xl md:text-6xl font-extrabold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r dark:from-yellow-200 dark:via-yellow-400 dark:to-yellow-200 from-yellow-400 via-yellow-600 to-yellow-400 animate-shimmer"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
