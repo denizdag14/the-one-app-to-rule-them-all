@@ -1,5 +1,3 @@
-const API_KEY = process.env.API_KEY;
-
 export interface Movies {
   id: string;
   title: string;
