@@ -258,7 +258,7 @@ const MovieCharacters = ({ characters }: { characters: Character[] }) => (
           transition={{ duration: 0.3, delay: index * 0.1 }}
           className="bg-white bg-opacity-60 dark:bg-gray-800 dark:bg-opacity-60 p-4 rounded-lg text-center shadow-lg hover:shadow-2xl transition-all duration-300 backdrop-filter backdrop-blur-sm"
         >
-          <Link href={`/character/${character.id}`}>
+          <Link href={`/characters/${character.id}`}>
             <p className="text-blue-600 dark:text-blue-400 font-semibold text-lg hover:underline">
               {character.name}
             </p>
